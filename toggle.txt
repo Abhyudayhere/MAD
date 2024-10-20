@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:gravity="center">
+
+    <ToggleButton
+        android:id="@+id/toggleButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textOn="ON"
+        android:textOff="OFF" />
+
+    <TextView
+        android:id="@+id/statusTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Status: OFF"
+        android:textSize="18sp"
+        android:layout_marginTop="20dp" />
+</LinearLayout>
+
+
+package com.example.toggbuttondemo;
+
+import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.ToggleButton;
+
+public class MainActivity extends AppCompatActivity {
+
+    private ToggleButton toggleButton;
+    private TextView statusTextView;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        // Initialize views
+        toggleButton = findViewById(R.id.toggleButton);
+        statusTextView = findViewById(R.id.statusTextView);
+
+        // Set an OnClickListener for the ToggleButton
+        toggleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Check the state of the ToggleButton and update the TextView
+                if (toggleButton.isChecked()) {
+                    statusTextView.setText("Status: ON");
+                } else {
+                    statusTextView.setText("Status: OFF");
+                }
+            }
+        });
+    }
+}

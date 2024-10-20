@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:gravity="center">
+
+    <EditText
+        android:id="@+id/editTextUsername"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Username" />
+
+    <Button
+        android:id="@+id/buttonSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save" />
+
+    <Button
+        android:id="@+id/buttonLoad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Load" />
+
+    <TextView
+        android:id="@+id/textViewResult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:layout_marginTop="20dp" />
+</LinearLayout>
+
+
+package com.example.sharedpreferencesdemo;
+
+import androidx.appcompat.app.AppCompatActivity;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
+public class MainActivity extends AppCompatActivity {
+
+    private EditText editTextUsername;
+    private Button buttonSave, buttonLoad;
+    private TextView textViewResult;
+
+    // SharedPreferences keys
+    private static final String PREFS_NAME = "MyPrefs";
+    private static final String KEY_USERNAME = "username";
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        editTextUsername = findViewById(R.id.editTextUsername);
+        buttonSave = findViewById(R.id.buttonSave);
+        buttonLoad = findViewById(R.id.buttonLoad);
+        textViewResult = findViewById(R.id.textViewResult);
+
+        // Load button click listener
+        buttonLoad.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadUsername();
+            }
+        });
+
+        // Save button click listener
+        buttonSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveUsername();
+            }
+        });
+    }
+
+    private void saveUsername() {
+        String username = editTextUsername.getText().toString();
+        if (!username.isEmpty()) {
+            SharedPreferences sharedPreferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString(KEY_USERNAME, username);
+            editor.apply(); // Save changes
+            Toast.makeText(this, "Username saved!", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Please enter a username.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void loadUsername() {
+        SharedPreferences sharedPreferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        String username = sharedPreferences.getString(KEY_USERNAME, "No username found");
+        textViewResult.setText(username); // Display the loaded username
+    }
+}

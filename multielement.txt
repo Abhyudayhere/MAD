@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/titleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Multi-Element Demo"
+        android:textSize="24sp"
+        android:layout_gravity="center_horizontal"
+        android:padding="8dp" />
+
+    <EditText
+        android:id="@+id/nameEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter your name"
+        android:padding="8dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Gender:"
+        android:padding="8dp" />
+
+    <RadioGroup
+        android:id="@+id/genderRadioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/maleRadioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Male" />
+
+        <RadioButton
+            android:id="@+id/femaleRadioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Female" />
+    </RadioGroup>
+
+    <CheckBox
+        android:id="@+id/subscribeCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Subscribe to Newsletter"
+        android:padding="8dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Choose your country:"
+        android:padding="8dp" />
+
+    <Spinner
+        android:id="@+id/countrySpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/submitButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Submit"
+        android:layout_gravity="center_horizontal"
+        android:padding="8dp" />
+
+    <TextView
+        android:id="@+id/outputTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Your details will appear here"
+        android:textSize="18sp"
+        android:layout_gravity="center_horizontal"
+        android:padding="8dp" />
+
+</LinearLayout>
+
+
+java
+
+package com.example.multielementdemo;
+
+import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.ArrayAdapter;
+
+public class MainActivity extends AppCompatActivity {
+
+    private EditText nameEditText;
+    private RadioGroup genderRadioGroup;
+    private CheckBox subscribeCheckBox;
+    private Spinner countrySpinner;
+    private Button submitButton;
+    private TextView outputTextView;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        // Initialize views
+        nameEditText = findViewById(R.id.nameEditText);
+        genderRadioGroup = findViewById(R.id.genderRadioGroup);
+        subscribeCheckBox = findViewById(R.id.subscribeCheckBox);
+        countrySpinner = findViewById(R.id.countrySpinner);
+        submitButton = findViewById(R.id.submitButton);
+        outputTextView = findViewById(R.id.outputTextView);
+
+        // Set up the spinner with countries
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.countries_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        countrySpinner.setAdapter(adapter);
+
+        // Set an onClickListener for the button
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Get the name from the EditText
+                String name = nameEditText.getText().toString();
+
+                // Get selected gender
+                int selectedGenderId = genderRadioGroup.getCheckedRadioButtonId();
+                RadioButton selectedGenderButton = findViewById(selectedGenderId);
+                String gender = (selectedGenderButton != null) ? selectedGenderButton.getText().toString() : "Not specified";
+
+                // Check if user opted for subscription
+                boolean isSubscribed = subscribeCheckBox.isChecked();
+                String subscription = isSubscribed ? "Subscribed" : "Not Subscribed";
+
+                // Get the selected country
+                String country = countrySpinner.getSelectedItem().toString();
+
+                // Display the collected data
+                String result = "Name: " + name + "\nGender: " + gender + "\nCountry: " + country + "\nSubscription: " + subscription;
+                outputTextView.setText(result);
+            }
+        });
+    }
+}

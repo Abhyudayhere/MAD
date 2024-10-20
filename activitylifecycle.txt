@@ -1,0 +1,88 @@
+xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/lifecycleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Activity Lifecycle"
+        android:textSize="20sp"
+        android:layout_centerInParent="true" />
+</RelativeLayout>
+
+java
+
+package com.example.activitylifecycledemo;
+
+import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+import android.util.Log;
+import android.widget.TextView;
+
+public class MainActivity extends AppCompatActivity {
+
+    private static final String TAG = "ActivityLifecycle";
+    private TextView lifecycleTextView;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        lifecycleTextView = findViewById(R.id.lifecycleTextView);
+        displayMessage("onCreate called");
+        Log.d(TAG, "onCreate called");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        displayMessage("onStart called");
+        Log.d(TAG, "onStart called");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        displayMessage("onResume called");
+        Log.d(TAG, "onResume called");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        displayMessage("onPause called");
+        Log.d(TAG, "onPause called");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        displayMessage("onStop called");
+        Log.d(TAG, "onStop called");
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        displayMessage("onRestart called");
+        Log.d(TAG, "onRestart called");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        displayMessage("onDestroy called");
+        Log.d(TAG, "onDestroy called");
+    }
+
+    private void displayMessage(String message) {
+        String currentText = lifecycleTextView.getText().toString();
+        lifecycleTextView.setText(currentText + "\n" + message);
+    }
+}

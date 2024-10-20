@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:gravity="center">
+
+    <Button
+        android:id="@+id/pickTimeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pick Time" />
+
+    <TextView
+        android:id="@+id/selectedTimeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Selected Time will appear here"
+        android:textSize="18sp"
+        android:layout_marginTop="20dp" />
+</LinearLayout>
+
+
+package com.example.timepickerdemo;
+
+import androidx.appcompat.app.AppCompatActivity;
+import android.app.TimePickerDialog;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+
+import java.util.Calendar;
+
+public class MainActivity extends AppCompatActivity {
+
+    private Button pickTimeButton;
+    private TextView selectedTimeTextView;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        // Initialize views
+        pickTimeButton = findViewById(R.id.pickTimeButton);
+        selectedTimeTextView = findViewById(R.id.selectedTimeTextView);
+
+        // Set onClickListener for the button
+        pickTimeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Get current time
+                Calendar calendar = Calendar.getInstance();
+                int hour = calendar.get(Calendar.HOUR_OF_DAY);
+                int minute = calendar.get(Calendar.MINUTE);
+
+                // Create a TimePickerDialog
+                TimePickerDialog timePickerDialog = new TimePickerDialog(MainActivity.this,
+                        (view, selectedHour, selectedMinute) -> {
+                            // Set the selected time in the TextView
+                            selectedTimeTextView.setText("Selected Time: " + selectedHour + ":" + String.format("%02d", selectedMinute));
+                        }, hour, minute, true);
+
+                // Show the TimePickerDialog
+                timePickerDialog.show();
+            }
+        });
+    }
+}

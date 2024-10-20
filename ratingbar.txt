@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:gravity="center">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Rate this app"
+        android:textSize="24sp"
+        android:padding="8dp"
+        android:layout_gravity="center_horizontal"/>
+
+    <RatingBar
+        android:id="@+id/ratingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:numStars="5"
+        android:stepSize="0.5"
+        android:rating="3.0"
+        android:layout_gravity="center_horizontal" />
+
+    <Button
+        android:id="@+id/submitButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Submit Rating"
+        android:layout_gravity="center_horizontal"
+        android:padding="8dp" />
+
+    <TextView
+        android:id="@+id/outputTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Your rating will appear here"
+        android:textSize="18sp"
+        android:layout_gravity="center_horizontal"
+        android:padding="8dp" />
+</LinearLayout>
+
+
+java
+
+package com.example.ratingbardemo;
+
+import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.RatingBar;
+import android.widget.TextView;
+
+public class MainActivity extends AppCompatActivity {
+
+    private RatingBar ratingBar;
+    private Button submitButton;
+    private TextView outputTextView;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        // Initialize views
+        ratingBar = findViewById(R.id.ratingBar);
+        submitButton = findViewById(R.id.submitButton);
+        outputTextView = findViewById(R.id.outputTextView);
+
+        // Set an onClickListener for the button
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Get the rating from the RatingBar
+                float rating = ratingBar.getRating();
+                // Display the rating in the outputTextView
+                outputTextView.setText("Your rating: " + rating + " stars");
+            }
+        });
+    }
+}

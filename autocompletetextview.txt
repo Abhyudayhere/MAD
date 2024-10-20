@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:gravity="center">
+
+    <AutoCompleteTextView
+        android:id="@+id/autoCompleteTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Type to search..."
+        android:padding="10dp"
+        android:threshold="1" />
+
+    <TextView
+        android:id="@+id/selectedTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Selected Item will appear here"
+        android:textSize="18sp"
+        android:padding="10dp" />
+
+</LinearLayout>
+
+
+package com.example.autocompletetextviewdemo;
+
+import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.TextView;
+
+public class MainActivity extends AppCompatActivity {
+
+    private AutoCompleteTextView autoCompleteTextView;
+    private TextView selectedTextView;
+    private String[] suggestions = {
+            "Apple",
+            "Banana",
+            "Cherry",
+            "Date",
+            "Fig",
+            "Grape",
+            "Kiwi",
+            "Lemon",
+            "Mango",
+            "Orange",
+            "Peach",
+            "Pineapple",
+            "Raspberry",
+            "Strawberry",
+            "Watermelon"
+    };
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        // Initialize views
+        autoCompleteTextView = findViewById(R.id.autoCompleteTextView);
+        selectedTextView = findViewById(R.id.selectedTextView);
+
+        // Set up the adapter for AutoCompleteTextView
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_dropdown_item_1line, suggestions);
+        autoCompleteTextView.setAdapter(adapter);
+
+        // Set an item click listener to handle selections
+        autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // Get the selected item
+                String selectedItem = (String) parent.getItemAtPosition(position);
+                selectedTextView.setText("Selected: " + selectedItem);
+            }
+        });
+    }
+}

@@ -1,0 +1,83 @@
+xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Linear Layout Example"
+        android:textSize="24sp"
+        android:layout_gravity="center_horizontal"
+        android:padding="8dp" />
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter your name"
+        android:padding="8dp" />
+
+    <Button
+        android:id="@+id/submitButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Submit"
+        android:layout_gravity="center_horizontal"
+        android:padding="8dp" />
+
+    <TextView
+        android:id="@+id/outputTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Your name will appear here"
+        android:textSize="18sp"
+        android:layout_gravity="center_horizontal"
+        android:padding="8dp" />
+
+</LinearLayout>
+
+java
+
+package com.example.linearlayoutdemo;
+
+import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+
+public class MainActivity extends AppCompatActivity {
+
+    private EditText editText;
+    private Button submitButton;
+    private TextView outputTextView;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        // Initialize views
+        editText = findViewById(R.id.editText);
+        submitButton = findViewById(R.id.submitButton);
+        outputTextView = findViewById(R.id.outputTextView);
+
+        // Set an onClickListener for the button
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Get the text entered by the user
+                String name = editText.getText().toString();
+                // Display the entered name in the outputTextView
+                outputTextView.setText("Hello, " + name + "!");
+            }
+        });
+    }
+}
